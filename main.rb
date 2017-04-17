@@ -28,6 +28,14 @@ class Service
 		# process data file
 		process_data_file('questions.csv')
 
+		# debug print
+		debug_print
+		
+
+		# distribute questions
+		distribute_questions(ARGV[0])
+
+
 		
 	end
 
@@ -55,28 +63,72 @@ class Service
   
           #puts "\n\nRow is #{row}"
           #puts "strand_id: #{row['strand_id']}. strand_name: #{row['strand_name']}." 
-          # standard_id: #{row['standard_id']}. standard_name: #{row['standard_name']}. question_id: #{row['question_id'] difficulty: #{row['difficulty']}.\n"
+          # standard_id: #{row['standard_id']}. standard_name: #{row['standard_name']}. question_id: #{row['question_id']} difficulty: #{row['difficulty']}.\n"
   
           # skip empty row
           next if row.size == 0
+
+          # store data info into a question hash
+          unless @questions.has_key?(row['question_id'])
   
-          
+            a_question = Question.new(row['question_id'], row['difficulty'], row['standard_id'])
+  
+            @questions.store(row['question_id'], a_question)
+  
+          end
+
+          # store standard
+          unless @standards.has_key?(row['standard_id'])
+  
+            a_standard = Standard.new(row['standard_id'], row['standard_name'], row['strand_id'])
+  
+            @standards.store(row['standard_id'], a_standard)
+  
+          end
+
+          # store strand
+          unless @strands.has_key?(row['strand_id'])
+  
+            a_strand = Strand.new(row['strand_id'], row['strand_name'])
+  
+            @strands.store(row['strand_id'], a_strand)
+  
+          end
   
         rescue StandardError => e  
           puts "\nException in CSV for row: #{row}! Error is: #{e.message}."
         end
       end
 
+	  end
 
 
+	  def distribute_questions(total_questions)
 
 
 
 
 
 	  	
-
 	  end
+
+	  def print_instances(label='', my_data)
+      
+      my_data.each do |q|
+        puts "#{label} #{q}"
+        puts "\n\n"
+      end
+
+    end
+
+    def debug_print
+
+      print_instances("strands:", @strands)
+      print_instances("standrads:", @standards)
+    	print_instances("ques:", @questions)
+    	
+    end
+    
 
 end
 
