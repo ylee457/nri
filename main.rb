@@ -10,9 +10,6 @@ class Service
 		@strands = {}
 		@questions = {}
 		@standards = {}
-
-
-
 	end
 
 	def run
@@ -20,6 +17,11 @@ class Service
 		# ask question - using command line argument
 		if ARGV.size != 1
       puts "Error! Please provide proper parameters to your command. \n\n"
+      puts "Usage: ruby main.rb number_of_questions.\n"
+      puts "Example. ruby main.rb 10"
+      exit 1
+    elsif ARGV[0].to_i <= 0
+    	puts "Error! Please provide a positive number greater than 0 for the number of question. \n\n"
       puts "Usage: ruby main.rb number_of_questions.\n"
       puts "Example. ruby main.rb 10"
       exit 1
