@@ -1,6 +1,7 @@
 class Standard
 
-	attr_accessor :id, :name
+	attr_accessor :name
+	attr_reader :id, :strand_id
 
 	def initialize(id, name)
 

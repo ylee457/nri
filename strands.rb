@@ -1,6 +1,7 @@
 class Strand
 
-  attr_accessor :id, :name
+  attr_accessor :name
+  attr_reader :id
 
   def initialize(id, name)
 
